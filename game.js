@@ -371,6 +371,14 @@ function draw() {
   ctx.fillRect(0, 0, W, H);
 }
 
+// 经典马里奥绿色水管
+const PIPE_GREEN = {
+  base: '#43b047',     // 主体绿
+  light: '#9be564',    // 左侧高光带
+  dark: '#1d7a2c',     // 右侧暗带
+  outline: '#07341b',  // 深色描边
+};
+
 function drawPipe(p) {
   const topH = p.gapY - p.gapH / 2;
   const botY = p.gapY + p.gapH / 2;
@@ -379,29 +387,29 @@ function drawPipe(p) {
 }
 
 function drawPipeSeg(x, y, h, isTop) {
-  if (h <= 0) return;
-  const w = CFG.pipeW;
-  const g = ctx.createLinearGradient(x, 0, x + w, 0);
-  g.addColorStop(0, '#1c3236');
-  g.addColorStop(0.5, '#2a4a4e');
-  g.addColorStop(1, '#16292c');
-  ctx.fillStyle = g;
-  ctx.fillRect(x, y, w, h);
-
-  // 电极触点装饰
-  ctx.fillStyle = 'rgba(127,209,201,0.14)';
-  for (let yy = y + 14; yy < y + h - 10; yy += 26) {
-    ctx.fillRect(x + 10, yy, w - 20, 3);
+  const w = CFG.pipeW, capH = 22, inset = 5;
+  if (isTop) {
+    // 管身收窄,管口帽檐加宽压在缺口一端
+    drawPipeBands(x + inset, y, w - inset * 2, h - capH);
+    drawPipeBands(x, y + h - capH, w, capH);
+  } else {
+    drawPipeBands(x, y, w, capH);
+    drawPipeBands(x + inset, y + capH, w - inset * 2, h - capH);
   }
+}
 
-  // 端口帽檐
-  const capH = 16;
-  const capY = isTop ? y + h - capH : y;
-  ctx.fillStyle = '#33585c';
-  roundRect(x - 5, capY, w + 10, capH, 5);
-  ctx.fill();
-  ctx.fillStyle = 'rgba(127,209,201,0.85)';
-  ctx.fillRect(x - 5, isTop ? capY + capH - 2 : capY, w + 10, 2);
+// 竖向明暗条纹 + 描边,马里奥水管的经典画法
+function drawPipeBands(x, y, w, h) {
+  if (h <= 0 || w <= 0) return;
+  ctx.fillStyle = PIPE_GREEN.base;
+  ctx.fillRect(x, y, w, h);
+  ctx.fillStyle = PIPE_GREEN.light;
+  ctx.fillRect(x + 3, y, Math.round(w * 0.24), h);
+  ctx.fillStyle = PIPE_GREEN.dark;
+  ctx.fillRect(x + w - 3 - Math.round(w * 0.22), y, Math.round(w * 0.22), h);
+  ctx.strokeStyle = PIPE_GREEN.outline;
+  ctx.lineWidth = 2;
+  ctx.strokeRect(x + 1, y + 1, w - 2, h - 2);
 }
 
 function roundRect(x, y, w, h, r) {
@@ -635,7 +643,7 @@ function drawReady() {
   // 规则彩蛋
   ctx.font = `400 15px ${FONT}`;
   ctx.fillStyle = 'rgba(160,185,215,0.75)';
-  ctx.fillText('穿越沟壑 · 触地即死', W / 2, 422 + bob);
+  ctx.fillText('穿越绿色水管 · 触地即死', W / 2, 422 + bob);
   ctx.fillStyle = 'rgba(127,209,201,0.55)';
   ctx.font = `400 13px ${FONT}`;
   ctx.fillText('floor_contacts_fatal = True', W / 2, 446 + bob);
@@ -674,7 +682,7 @@ function drawDead() {
   ctx.fillStyle = 'rgba(180,200,225,0.85)';
   ctx.fillText(hitCause === 'ground'
     ? '触地即致命 —— floor_contacts_fatal=True'
-    : '撞上了沟壑电极墙', W / 2, py + 76);
+    : '一头撞上了绿色水管', W / 2, py + 76);
 
   ctx.font = `600 24px ${FONT}`;
   ctx.fillStyle = '#eef6ff';
