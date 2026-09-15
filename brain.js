@@ -39,9 +39,11 @@ const S = {
 };
 let pts = [], pulses = [], eeg = [], rings = [];
 let W = 0, H = 0;
-const rot = { y: 0.55, x: 0.14 };
+const rot = { y: -0.35, x: 0.12 };
+const mouse = { x: -9999, y: -9999, in: false };
 let proj = null;
 let sweepT = Math.random() * 8, sweepY = -1;
+let hoverSpark = 0;
 
 /* ---------- 构建全脑点云(解剖学分形,移植自 NEUROFLY buildFlyBrain) ---------- */
 function buildFlyBrain() {
@@ -297,8 +299,26 @@ function update(dt) {
   }
   if (pulses.length > 420) pulses.splice(0, pulses.length - 420);
 
-  // 自动旋转
-  if (S.life > 0.2) rot.y += dt * 0.14;
+  // 鼠标悬停刺激:光标附近神经元柔光渐亮(不点火),每 0.3s 随机点燃一颗 → 辐射脉冲
+  if (mouse.in && !dragging && S.life > 0.25) {
+    const R0 = 34;
+    const near = [];
+    for (let i = 0; i < pts.length; i++) {
+      const o = i * 3;
+      const dx = proj[o] - mouse.x, dy = proj[o + 1] - mouse.y;
+      const d2 = dx * dx + dy * dy;
+      if (d2 < R0 * R0) {
+        const d = Math.sqrt(d2);
+        pts[i].e = Math.min(0.95, pts[i].e + dt * 2.6 * (1 - d / R0));
+        near.push(i);
+      }
+    }
+    hoverSpark -= dt;
+    if (hoverSpark <= 0 && near.length) {
+      hoverSpark = 0.26 + Math.random() * 0.3;
+      pts[near[(Math.random() * near.length) | 0]].e = 1.9;
+    }
+  }
 
   // 全息扫描线(每 8 秒扫过一次)
   sweepT = (sweepT + dt) % 8;
@@ -470,10 +490,11 @@ function draw() {
   ctx.fillText('EEG TRACE', 12, H - 30);
 }
 
-/* ---------- 交互:拖拽旋转 + 点击刺激 ---------- */
+/* ---------- 交互:拖拽旋转 3D + 悬停激发突触 + 点击爆发 ---------- */
 let dragging = false, lastX = 0, lastY = 0;
 cv.addEventListener('pointerdown', e => {
   dragging = true; lastX = e.clientX; lastY = e.clientY;
+  try { cv.setPointerCapture(e.pointerId); } catch (err) {}
   const r = cv.getBoundingClientRect();
   rings.push({ x: e.clientX - r.left, y: e.clientY - r.top, r: 6, a: 1 });
   if (S.target >= 1) {
@@ -486,12 +507,18 @@ cv.addEventListener('pointerdown', e => {
     }
   }
 });
-window.addEventListener('pointermove', e => {
-  if (!dragging) return;
-  rot.y += (e.clientX - lastX) * 0.006;
-  rot.x = clamp(rot.x + (e.clientY - lastY) * 0.005, -0.9, 0.9);
-  lastX = e.clientX; lastY = e.clientY;
+cv.addEventListener('pointermove', e => {
+  const r = cv.getBoundingClientRect();
+  mouse.x = e.clientX - r.left;
+  mouse.y = e.clientY - r.top;
+  mouse.in = true;
+  if (dragging) {
+    rot.y += (e.clientX - lastX) * 0.006;
+    rot.x = clamp(rot.x + (e.clientY - lastY) * 0.005, -0.9, 0.9);
+    lastX = e.clientX; lastY = e.clientY;
+  }
 });
+cv.addEventListener('pointerleave', () => { mouse.in = false; });
 window.addEventListener('pointerup', () => { dragging = false; });
 
 /* ---------- 主循环 ---------- */
