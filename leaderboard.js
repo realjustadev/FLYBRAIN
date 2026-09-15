@@ -5,8 +5,8 @@
 (() => {
 'use strict';
 
-// Val Town 端点,部署后填入,例如 "https://realjustadev.val.town/v/flappyfly_scores"
-const API = "";
+// Val Town 端点(免费 HTTP val + SQLite);为空 = 离线模式
+const API = "https://realjustadev--6567271eb0a911f19f5b1607ee4eb77e.web.val.run";
 
 const $ = id => document.getElementById(id);
 const listEl = $('lbList'), statusEl = $('lbStatus');
