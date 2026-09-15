@@ -12,6 +12,12 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<header id="caBar" title="Click to copy CA">
+  <span class="sym">$NEUROFLY</span>
+  <span class="chain">EVM</span>
+  <span class="addr">0xD9A7ea4d1dB9b8Cf8468cF09Bab4Fb200B907777</span>
+  <span class="hint">CLICK TO COPY ⧉</span>
+</header>
 <div class="stage">
   <div class="game-wrap">
     <canvas id="game" width="480" height="720" aria-label="FLYBRAIN game"></canvas>
@@ -34,5 +40,32 @@
 <script src="brain.js"></script>
 <script src="leaderboard.js"></script>
 <script src="game.js"></script>
+<script>
+(() => {
+  const CA = '0xD9A7ea4d1dB9b8Cf8468cF09Bab4Fb200B907777';
+  const bar = document.getElementById('caBar');
+  const hint = bar.querySelector('.hint');
+  let t = null;
+  bar.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(CA);
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = CA;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }
+    hint.textContent = 'CA COPIED ✓';
+    bar.classList.add('copied');
+    clearTimeout(t);
+    t = setTimeout(() => {
+      hint.textContent = 'CLICK TO COPY ⧉';
+      bar.classList.remove('copied');
+    }, 1600);
+  });
+})();
+</script>
 </body>
 </html>

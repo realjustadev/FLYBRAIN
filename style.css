@@ -9,7 +9,33 @@ html,body{
   -webkit-tap-highlight-color:transparent;
   touch-action:manipulation;
 }
-.stage{display:flex;gap:14px;height:min(100vh,150vw)}
+body{padding-top:36px}
+/* 顶部 CA 横幅(点击复制) */
+#caBar{
+  position:fixed;top:0;left:0;right:0;height:36px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:rgba(6,10,18,.92);
+  border-bottom:1px solid rgba(94,230,255,.18);
+  cursor:pointer;z-index:50;backdrop-filter:blur(6px);
+  font-family:ui-monospace,Consolas,"Courier New",monospace;
+  -webkit-user-select:none;user-select:none;
+}
+#caBar:hover{background:rgba(10,18,30,.97)}
+#caBar .sym{
+  color:#3dffb0;font-weight:800;font-size:13px;letter-spacing:.06em;
+  text-shadow:0 0 12px rgba(61,255,176,.45);
+}
+#caBar .chain{
+  font-size:9px;letter-spacing:.22em;color:#ffc247;
+  border:1px solid rgba(255,194,71,.45);padding:2px 8px;
+}
+#caBar .addr{
+  color:#cfe3ff;font-size:11.5px;
+  max-width:min(56vw,430px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+#caBar .hint{font-size:10px;color:rgba(160,185,215,.7);letter-spacing:.1em}
+#caBar.copied .hint{color:#3dffb0}
+.stage{display:flex;gap:14px;height:calc(min(100vh,150vw) - 44px)}
 .game-wrap{position:relative;height:100%;aspect-ratio:2/3}
 #game{
   width:100%;height:100%;display:block;
