@@ -7,7 +7,7 @@ the side panel in this game is a live-rendered fly brain in that style.
 
 **Play online:**
 - GitHub Pages: https://realjustadev.github.io/FLYBRAIN/
-- Cloudflare Pages: https://flybrain.pages.dev/
+- Cloudflare Pages: https://flybrain-aox.pages.dev/
 
 ## How to play
 
