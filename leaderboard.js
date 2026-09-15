@@ -75,6 +75,11 @@ async function fetchTop() {
 
 async function submit() {
   if (busy || submitted) return;
+  if (currentScore <= 0) {
+    msg.textContent = '0 分就不上榜了吧 😉';
+    msg.className = 'show';
+    return;
+  }
   busy = true; btn.disabled = true;
   msg.textContent = '提交中…';
   msg.className = 'show';
