@@ -263,7 +263,7 @@ function update(dt) {
         score++;
         Sfx.score();
         burst(p.x + CFG.pipeW / 2, p.gapY, 8, { speed: 2.4, r: 2, color: '130,230,210' });
-        if (score % 10 === 0) flash = { txt: score + ' ! 速度提升', life: 70 };
+        if (score % 10 === 0) flash = { txt: score + '! SPEED UP', life: 70 };
       }
     }
     pipes = pipes.filter(p => p.x > -CFG.pipeW - 10);
@@ -639,18 +639,18 @@ function drawReady() {
 
   ctx.font = `600 30px ${FONT}`;
   ctx.fillStyle = '#e8f1ff';
-  ctx.fillText('果 蝇 扑 翼', W / 2, 226);
+  ctx.fillText('A FRUIT FLY TRIBUTE', W / 2, 226);
 
   // 操作提示(避开 y≈302 的果蝇悬浮位置)
   const bob = Math.sin(time * 0.08) * 3;
   ctx.font = `500 21px ${FONT}`;
   ctx.fillStyle = 'rgba(232,241,255,0.9)';
-  ctx.fillText('空格 / 点击 · 拍翅上升', W / 2, 388 + bob);
+  ctx.fillText('SPACE / CLICK · FLAP TO FLY', W / 2, 388 + bob);
 
   // 规则彩蛋
   ctx.font = `400 15px ${FONT}`;
   ctx.fillStyle = 'rgba(160,185,215,0.75)';
-  ctx.fillText('穿越绿色水管 · 触地即死', W / 2, 422 + bob);
+  ctx.fillText('DODGE THE GREEN PIPES · GROUND IS FATAL', W / 2, 422 + bob);
   ctx.fillStyle = 'rgba(127,209,201,0.55)';
   ctx.font = `400 13px ${FONT}`;
   ctx.fillText('floor_contacts_fatal = True', W / 2, 446 + bob);
@@ -658,13 +658,13 @@ function drawReady() {
   if (best > 0) {
     ctx.font = `600 18px ${FONT}`;
     ctx.fillStyle = '#ffd98a';
-    ctx.fillText('最佳 ' + best, W / 2, 486);
+    ctx.fillText('BEST ' + best, W / 2, 486);
   }
 
   // 底部致意
   ctx.font = `400 13px ${FONT}`;
   ctx.fillStyle = 'rgba(160,185,215,0.6)';
-  ctx.fillText('灵感来自 flybody · MuJoCo 果蝇神经力学模型', W / 2, H - 32);
+  ctx.fillText('Inspired by flybody · MuJoCo fruit fly model', W / 2, H - 32);
 }
 
 function drawDead() {
@@ -683,27 +683,27 @@ function drawDead() {
 
   ctx.font = `700 32px ${FONT}`;
   ctx.fillStyle = '#ff8d7a';
-  ctx.fillText('游 戏 结 束', W / 2, py + 46);
+  ctx.fillText('GAME OVER', W / 2, py + 46);
 
-  ctx.font = `400 15px ${FONT}`;
+  ctx.font = `400 13px ${FONT}`;
   ctx.fillStyle = 'rgba(180,200,225,0.85)';
   ctx.fillText(hitCause === 'ground'
-    ? '触地即致命 —— floor_contacts_fatal=True'
-    : '一头撞上了绿色水管', W / 2, py + 76);
+    ? 'GROUND IS FATAL · floor_contacts_fatal=True'
+    : 'Crashed into a green pipe', W / 2, py + 76);
 
   ctx.font = `600 24px ${FONT}`;
   ctx.fillStyle = '#eef6ff';
-  ctx.fillText(`得分 ${score}`, W / 2, py + 122);
+  ctx.fillText(`SCORE ${score}`, W / 2, py + 122);
   ctx.font = `500 18px ${FONT}`;
   ctx.fillStyle = '#ffd98a';
-  ctx.fillText(`最佳 ${best}`, W / 2, py + 154);
+  ctx.fillText(`BEST ${best}`, W / 2, py + 154);
 
   if (newBest) {
     ctx.font = `700 17px ${FONT}`;
     ctx.fillStyle = '#7fd1c9';
     const t = Math.sin(time * 0.15) * 0.5 + 0.5;
     ctx.globalAlpha = a * (0.65 + 0.35 * t);
-    ctx.fillText('★ 新纪录 ★', W / 2, py + 184);
+    ctx.fillText('★ NEW BEST ★', W / 2, py + 184);
     ctx.globalAlpha = a;
   }
 
@@ -711,7 +711,7 @@ function drawDead() {
     const bob = Math.sin(time * 0.09) * 2.5;
     ctx.font = `500 19px ${FONT}`;
     ctx.fillStyle = 'rgba(232,241,255,0.92)';
-    ctx.fillText('空格 / 点击 · 再飞一次', W / 2, py + ph + 44 + bob);
+    ctx.fillText('SPACE / CLICK · FLY AGAIN', W / 2, py + ph + 44 + bob);
   }
   ctx.globalAlpha = 1;
 }

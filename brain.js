@@ -188,13 +188,13 @@ function draw() {
   ctx.textAlign = 'left';
   ctx.font = `${11 * K}px "Segoe UI","Microsoft YaHei",sans-serif`;
   ctx.fillStyle = `rgba(127,209,201,${0.35 + 0.45 * mix})`;
-  ctx.fillText('突触活性 · SYNAPTIC ACTIVITY', 12 * K, 16 * K);
+  ctx.fillText('SYNAPTIC ACTIVITY', 12 * K, 16 * K);
   ctx.textAlign = 'right';
   if (S.life < 0.5) {
     const blink = S.t - S.deadAt < 150 ? (S.t % 20 < 12 ? 1 : 0.25) : 1;
     ctx.fillStyle = `rgba(226,87,75,${0.95 * blink})`;
     ctx.font = `700 ${12 * K}px "Segoe UI","Microsoft YaHei",sans-serif`;
-    ctx.fillText('BRAIN DEAD · 脑死亡', W - 12 * K, 16 * K);
+    ctx.fillText('BRAIN DEAD', W - 12 * K, 16 * K);
   } else {
     ctx.fillStyle = 'rgba(230,245,255,0.9)';
     ctx.font = `700 ${12 * K}px "Segoe UI",sans-serif`;
@@ -276,7 +276,7 @@ function draw() {
   ctx.textAlign = 'left';
   ctx.font = `${9.5 * K}px "Segoe UI","Microsoft YaHei",sans-serif`;
   ctx.fillStyle = 'rgba(160,185,215,0.55)';
-  ctx.fillText('EEG · 脑电图', 12 * K, H - 30 * K);
+  ctx.fillText('EEG TRACE', 12 * K, H - 30 * K);
 }
 
 // ---------- 主循环 ----------

@@ -41,7 +41,7 @@ function render(list, note) {
   if (!list || !list.length) {
     const li = document.createElement('li');
     li.className = 'lb-empty';
-    li.textContent = '暂无记录 · 抢占第一吧';
+    li.textContent = 'No scores yet · Be the first';
     listEl.appendChild(li);
   } else {
     list.slice(0, 5).forEach((r, i) => {
@@ -64,27 +64,27 @@ function render(list, note) {
 }
 
 async function fetchTop() {
-  if (!API) { render(localTop().slice(0, 5), '离线模式'); return; }
+  if (!API) { render(localTop().slice(0, 5), 'OFFLINE'); return; }
   try {
     const r = await fetch(API, { cache: 'no-store' });
     render(await r.json(), '● LIVE');
   } catch (e) {
-    render(localTop().slice(0, 5), '离线');
+    render(localTop().slice(0, 5), 'OFFLINE');
   }
 }
 
 async function submit() {
   if (busy || submitted) return;
   if (currentScore <= 0) {
-    msg.textContent = '0 分就不上榜了吧 😉';
+    msg.textContent = "A zero score doesn't make the board 😉";
     msg.className = 'show';
     return;
   }
   busy = true; btn.disabled = true;
-  msg.textContent = '提交中…';
+  msg.textContent = 'Submitting…';
   msg.className = 'show';
 
-  const name = (input.value || '').trim().slice(0, 8) || '无名蝇';
+  const name = (input.value || '').trim().slice(0, 8) || 'fly';
   localStorage.setItem(LS.name, name);
   saveLocal({ n: name, s: currentScore, t: Date.now(), pid });
 
@@ -99,18 +99,18 @@ async function submit() {
       if (d && Array.isArray(d.top)) {
         render(d.top, '● LIVE');
         const rank = d.top.findIndex(x => x.n === name && x.s === currentScore) + 1;
-        msg.textContent = rank ? `已上榜 ✓ 当前第 ${rank} 名` : '已提交 ✓';
+        msg.textContent = rank ? `On the board ✓ Rank #${rank}` : 'Submitted ✓';
       } else {
-        msg.textContent = '已提交 ✓';
+        msg.textContent = 'Submitted ✓';
       }
       submitted = true;
     } catch (e) {
-      msg.textContent = '网络不通 · 成绩已存本地';
+      msg.textContent = 'Network failed · Saved locally';
     }
   } else {
-    msg.textContent = '离线模式 · 成绩已存本地';
+    msg.textContent = 'Offline · Saved locally';
     submitted = true;
-    render(localTop().slice(0, 5), '离线模式');
+    render(localTop().slice(0, 5), 'OFFLINE');
   }
   busy = false; btn.disabled = false;
 }
