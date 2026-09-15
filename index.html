@@ -4,15 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Flappy Fly · 果蝇扑翼</title>
-<meta name="description" content="果蝇版 Flappy Bird——灵感来自 TuragaLab/flybody 的 MuJoCo 果蝇神经力学模型。拍翅上升,穿越马里奥绿色水管,触地即死!">
+<meta name="description" content="果蝇版 Flappy Bird——灵感来自 TuragaLab/flybody 的 MuJoCo 果蝇神经力学模型。拍翅上升,穿越马里奥绿色水管,触地即死,附带实时突触活性监测!">
 <meta property="og:title" content="Flappy Fly · 果蝇扑翼">
-<meta property="og:description" content="灵感来自 flybody 果蝇神经力学模型的网页小游戏:拍翅上升,穿越马里奥绿色水管,触地即死。">
+<meta property="og:description" content="灵感来自 flybody 果蝇神经力学模型的网页小游戏:拍翅上升,穿越马里奥绿色水管,触地即死,附带实时突触活性监测。">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪰</text></svg>">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<canvas id="game" width="480" height="720" aria-label="Flappy Fly 游戏"></canvas>
+<div class="stage">
+  <div class="game-wrap">
+    <canvas id="game" width="480" height="720" aria-label="Flappy Fly 游戏"></canvas>
+    <div id="submitBar">
+      <div class="sb-row">
+        <input id="nameInput" maxlength="8" placeholder="留名(≤8字)" autocomplete="off">
+        <button id="submitBtn">提交全球榜</button>
+      </div>
+      <div id="submitMsg"></div>
+    </div>
+  </div>
+  <aside class="brain-panel">
+    <canvas id="brain" aria-label="突触活性监测"></canvas>
+    <div id="lb">
+      <div class="lb-title"><span>全球排行榜 TOP 5</span><span id="lbStatus"></span></div>
+      <ol id="lbList"></ol>
+    </div>
+  </aside>
+</div>
+<script src="brain.js"></script>
+<script src="leaderboard.js"></script>
 <script src="game.js"></script>
 </body>
 </html>

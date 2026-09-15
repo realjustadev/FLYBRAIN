@@ -162,6 +162,9 @@ function resetRun() {
 function startPlay() {
   resetRun();
   state = STATES.PLAY;
+  document.body.classList.remove('is-dead');
+  dispatchEvent(new CustomEvent('ff:revive'));
+  if (window.Brain) Brain.revive();
   flap();
 }
 
@@ -169,6 +172,7 @@ function flap() {
   fly.vy = CFG.flapVy;
   fly.wingBoost = 1;
   Sfx.ensure(); Sfx.flap();
+  if (window.Brain) Brain.flap();
   burst(fly.x - 12, fly.y + 10, 3, { speed: 1.6, r: 2, color: '200,220,255' });
 }
 
@@ -178,6 +182,9 @@ function die(cause) {
   hitCause = cause;
   shake = 14;
   Sfx.hit();
+  if (window.Brain) Brain.die();          // 撞击 → 立即脑死亡
+  document.body.classList.add('is-dead');
+  dispatchEvent(new CustomEvent('ff:death', { detail: { score } }));
   burst(fly.x, fly.y, 26, { speed: 4.5, r: 3, color: cause === 'ground' ? '220,120,90' : '140,220,200' });
   if (score > best) { best = score; newBest = true; localStorage.setItem('flappyfly_best', String(best)); }
 }
@@ -731,6 +738,8 @@ function canvasPos(e) {
 }
 
 window.addEventListener('keydown', e => {
+  // 输入框/按钮聚焦时不抢按键(排行榜留名)
+  if (/^(INPUT|BUTTON|TEXTAREA)$/.test(e.target.tagName)) return;
   if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
     e.preventDefault();
     if (!e.repeat) onAction(null, null);

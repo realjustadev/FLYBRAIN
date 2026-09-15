@@ -9,10 +9,77 @@ html,body{
   -webkit-tap-highlight-color:transparent;
   touch-action:manipulation;
 }
-canvas{
-  height:min(100vh,150vw);
-  aspect-ratio:2/3;
+.stage{display:flex;gap:14px;height:min(100vh,150vw)}
+.game-wrap{position:relative;height:100%;aspect-ratio:2/3}
+#game{
+  width:100%;height:100%;display:block;
   border-radius:14px;
   box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06);
   cursor:pointer;
+}
+.brain-panel{
+  height:100%;width:272px;
+  display:flex;flex-direction:column;
+  background:linear-gradient(165deg,#0d1524 0%,#0a0f1a 100%);
+  border:1px solid rgba(127,209,201,.14);
+  border-radius:14px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+  overflow:hidden;
+}
+#brain{flex:1;min-height:0;width:100%;display:block}
+#lb{
+  border-top:1px solid rgba(127,209,201,.12);
+  padding:10px 12px 8px;
+  max-height:214px;
+  display:flex;flex-direction:column;
+}
+.lb-title{
+  font-size:12px;letter-spacing:.12em;color:#7fd1c9;
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+#lbStatus{color:rgba(160,185,215,.6);font-size:10px;letter-spacing:.05em}
+#lbList{list-style:none;overflow:auto;margin-top:6px}
+#lbList li{
+  display:flex;gap:8px;align-items:baseline;
+  font-size:13px;color:#dbe7f5;
+  padding:3.5px 0;
+  border-bottom:1px dashed rgba(127,209,201,.07);
+}
+.lb-rank{color:#ffd98a;min-width:18px}
+.lb-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-score{color:#7fd1c9;font-weight:600}
+#lbList li.me .lb-name{color:#ffe9a8}
+#lbList li.me .lb-score{color:#ffe9a8}
+.lb-empty{color:rgba(160,185,215,.5);font-size:12px;border:none !important}
+/* 游戏结束后浮现在死亡面板下方的提交条 */
+#submitBar{
+  position:absolute;left:50%;bottom:13.5%;
+  transform:translateX(-50%) translateY(10px);
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s,transform .3s;
+}
+body.is-dead #submitBar{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.sb-row{display:flex;gap:8px}
+#nameInput{
+  width:148px;padding:9px 10px;
+  border-radius:9px;border:1px solid rgba(127,209,201,.4);
+  background:rgba(9,13,24,.94);color:#eef6ff;
+  font-size:14px;outline:none;text-align:center;
+}
+#nameInput:focus{border-color:#7fd1c9}
+#submitBtn{
+  padding:9px 12px;border-radius:9px;
+  border:1px solid rgba(127,209,201,.5);
+  background:rgba(127,209,201,.16);color:#d8fff7;
+  font-size:13px;cursor:pointer;white-space:nowrap;
+}
+#submitBtn:hover{background:rgba(127,209,201,.3)}
+#submitBtn:disabled{opacity:.5;cursor:default}
+#submitMsg{font-size:13px;color:#7fd1c9;text-shadow:0 1px 4px #000;min-height:18px}
+@media (max-width:860px){
+  .stage{flex-direction:column;height:auto;width:min(100vw,66.7vh);gap:10px}
+  .game-wrap{width:100%;height:auto}
+  .brain-panel{width:100%;height:238px}
+  #lb{max-height:104px}
 }
