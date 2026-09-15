@@ -6,8 +6,8 @@ Companion to [NEUROFLY](https://github.com/realjustadev/neurogenesis), the whole
 the side panel in this game is a live-rendered fly brain in that style.
 
 **Play online:**
-- GitHub Pages: https://realjustadev.github.io/flappy-fly/
-- Cloudflare Pages: https://flappy-fly.pages.dev/
+- GitHub Pages: https://realjustadev.github.io/FLYBRAIN/
+- Cloudflare Pages: https://flybrain.pages.dev/
 
 ## How to play
 
