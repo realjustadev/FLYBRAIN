@@ -634,7 +634,7 @@ function drawReady() {
   ctx.fillStyle = '#7fd1c9';
   ctx.shadowColor = 'rgba(127,209,201,0.45)';
   ctx.shadowBlur = 24;
-  ctx.fillText('FLAPPY FLY', W / 2, 178);
+  ctx.fillText('FLYBRAIN', W / 2, 178);
   ctx.shadowBlur = 0;
 
   ctx.font = `600 30px ${FONT}`;

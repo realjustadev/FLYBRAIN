@@ -1,7 +1,9 @@
-# 🪰 Flappy Fly
+# 🧠 FLYBRAIN
 
-Fruit fly Flappy Bird — inspired by [TuragaLab/flybody](https://github.com/TuragaLab/flybody),
+A fruit fly flappy game — inspired by [TuragaLab/flybody](https://github.com/TuragaLab/flybody),
 the DeepMind × HHMI Janelia neuromechanical fruit fly model published in Nature (2025).
+Companion to [NEUROFLY](https://github.com/realjustadev/neurogenesis), the whole-brain simulator —
+the side panel in this game is a live-rendered fly brain in that style.
 
 **Play online:**
 - GitHub Pages: https://realjustadev.github.io/flappy-fly/
@@ -19,11 +21,15 @@ the DeepMind × HHMI Janelia neuromechanical fruit fly model published in Nature
 - **Ground contact is fatal** (a nod to flybody's `floor_contacts_fatal=True`)
 - Speed-up hint every 10 points; best score stored locally
 
-## 🧠 Synapse monitor (side panel)
+## 🧠 Whole-brain synapse monitor (side panel)
 
-A live **synaptic activity monitor** sits next to the game:
+A live-rendered **fruit fly whole brain** sits next to the game — anatomically arranged
+point cloud, 9 regions in NEUROFLY neon palette (optic lobes, mushroom bodies,
+central complex, antennal lobes, lateral horn, SEGA, VNC…):
 
-- Every flap fires a burst through the neuron network — pulses travel along synapses
+- Every flap fires a burst through the whole brain — pulses travel along synapses
+- **Hover** the brain: neurons under the cursor glow softly and spark into chain-firing
+- **Drag** to rotate the 3D brain; click to detonate a local burst
 - The EEG trace at the bottom follows activity in real time
 - **Crash = instant brain death**: pulses vanish, neurons gray out, the EEG flatlines, `BRAIN DEAD`
 - Restarting revives the brain
