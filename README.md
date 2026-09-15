@@ -3,7 +3,9 @@
 Fruit fly Flappy Bird — inspired by [TuragaLab/flybody](https://github.com/TuragaLab/flybody),
 the DeepMind × HHMI Janelia neuromechanical fruit fly model published in Nature (2025).
 
-**Play online:** https://realjustadev.github.io/flappy-fly/
+**Play online:**
+- GitHub Pages: https://realjustadev.github.io/flappy-fly/
+- Cloudflare Pages: https://flappy-fly.pages.dev/
 
 ## How to play
 
